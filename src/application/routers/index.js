@@ -27,7 +27,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // ✅ Public Routes
 router.post("/register", userController.userCreate);
-// router.post("/login", userController.login);
+router.post("/login", userController.login);
 
 // ✅ Middleware: JWT Token doğrulama
 router.use(async (req, res, next) => {
