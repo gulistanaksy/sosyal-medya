@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(200)
+  fullName  String   @db.VarChar(250)
+  username  String   @unique @db.VarChar(200)
+  password  String   @db.VarChar(200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile? 
+  profileId Int?
+}
+
+model Profile {
+  id              Int      @id @default(autoincrement())
+  bio             String?
+  profilePicture  String?
+  isPrivate       Boolean  @default(false)
+  userId          Int      @unique
+  user            User     @relation(fields: [userId], references: [id])
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  
+  // Follow requests
+  sentFollowRequests     FollowRequest[] @relation("SentFollowRequests")
+  receivedFollowRequests FollowRequest[] @relation("ReceivedFollowRequests")
+
+  // Follow relationships
+  following       Follow[] @relation("following")
+  followers       Follow[] @relation("follower")
+
+
+  // notifications   Notification[]
+  //messagesSent    Message[] @relation("SentMessages", fields: [id], references: [senderId])
+  //messagesReceived Message[] @relation("ReceivedMessages", fields: [id], references: [receiverId])
+  // sentFriendRequests    FriendRequest[] @relation("SentFriendRequests")
+  // receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profileId Int
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  comments  Comment[]
+  likes     Like[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  profileId Int
+  profile   Profile  @relation(fields: [profileId], references: [id])
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  profileId Int
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  @@unique([profileId, postId])
+}
+
+model FollowRequest {
+  id         Int      @id @default(autoincrement())
+  senderId   Int     // istek atan
+  receiverId Int     // istek alan
+  status     FollowRequestStatus @default(PENDING)
+  createdAt  DateTime @default(now())
+
+  sender     Profile  @relation("SentFollowRequests", fields: [senderId], references: [id])
+  receiver   Profile  @relation("ReceivedFollowRequests", fields: [receiverId], references: [id])
+
+  @@unique([senderId, receiverId])
+}
+
+model Follow {
+  id         Int      @id @default(autoincrement())
+  followerId Int        // takip eden
+  followingId Int       // takip edilen
+  createdAt  DateTime @default(now())
+
+  follower   Profile  @relation("follower", fields: [followerId], references: [id])
+  following  Profile  @relation("following", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+
+// Takip İsteğini Kabul Etme veya Reddetme
+// Takip isteğini alan kullanıcı (B), isteği kabul ettiğinde veya reddettiğinde FollowRequest kaydının status alanı güncellenir.
+
+// Kabul Edilirse:
+// status ACCEPTED olarak güncellenir.
+// Follow modeline bir kayıt eklenir, bu da A'nın B'yi takip ettiği anlamına gelir.
+
+
+
+enum FollowRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+
+// model Notification {
+//   id        Int      @id @default(autoincrement())
+//   content   String
+//   createdAt DateTime @default(now())
+//   read      Boolean  @default(false)
+//   profileId Int
+//   profile   Profile  @relation(fields: [profileId], references: [id])
+// }
+
+// model Message {
+//   id        Int      @id @default(autoincrement())
+//   content   String
+//   createdAt DateTime @default(now())
+//   senderId  Int
+//   receiverId Int
+//   sender    Profile  @relation("SentMessages", fields: [senderId], references: [id])
+//   receiver  Profile  @relation("ReceivedMessages", fields: [receiverId], references: [id])
+// }
+
