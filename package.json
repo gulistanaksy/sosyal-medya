@@ -19,6 +19,9 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^17.2.0",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "minio": "^8.0.5",
+    "multer": "^2.0.1",
+    "uuid": "^11.1.0"
   }
 }

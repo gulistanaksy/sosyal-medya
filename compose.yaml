@@ -38,7 +38,7 @@ services:
       MINIO_SECRET_KEY: 091076c8bb54e10594050d88d09720501453427ac67329114f77c00bf4934281
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
-      MINIO_DEFAULT_BUCKETS: astrohub_media
+      MINIO_DEFAULT_BUCKETS: astrohub-media
     command: server --console-address ":9001" /data
     restart: always
     volumes:

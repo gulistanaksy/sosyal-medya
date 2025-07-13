@@ -1,11 +1,13 @@
 import getProfile from "./getProfile.js";
+import updateProfile from "./updateProfile.js";
+import uploadProfilePicture from "./uploadProfilePicture.js";
 // import createProfile from "./createProfile.js";
-// import updateProfile from "./updateProfile.js";
 
 class ProfileController {
   getProfile = getProfile;
+  updateProfile = updateProfile;
+  uploadProfilePicture = uploadProfilePicture;
   // createProfile = createProfile;
-  // updateProfile = updateProfile;
 }
 
 export default ProfileController;
