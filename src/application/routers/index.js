@@ -7,11 +7,11 @@ import { PrismaClient } from "@prisma/client";
 dotenv.config();
 
 // Router, Controller, Util
-import UserController from "../controllers/userController.js";
+import UserController from "../controllers/userController/index.js";
 import decryptToken from "../../../core/utils/token.js";
 
 // Alt router'lar
-import userRouter from "./userRouter.js";
+// import userRouter from "./userRouter.js";
 // import profileRouter from "./profileRouter.js";
 // import postRouter from "./postRouter.js";
 // import commentRouter from "./commentRouter.js";
@@ -27,7 +27,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // ✅ Public Routes
 router.post("/register", userController.userCreate);
-router.post("/login", userController.login);
+// router.post("/login", userController.login);
 
 // ✅ Middleware: JWT Token doğrulama
 router.use(async (req, res, next) => {
@@ -60,7 +60,7 @@ router.get("/", (req, res) => {
 });
 
 // ✅ Protected routes
-router.use("/user", userRouter);
+// router.use("/user", userRouter);
 // router.use("/profile", profileRouter);
 // router.use("/post", postRouter);
 // router.use("/comment", commentRouter);
