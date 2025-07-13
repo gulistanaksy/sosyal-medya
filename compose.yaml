@@ -1,0 +1,49 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: projeDB
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5433"
+    restart: always
+
+  api:
+    container_name: api
+    build: .
+    volumes:
+      - ./:/app
+    ports:
+      - "5000:5000"
+      - "8055:8055"
+    depends_on:
+      - postgres
+    restart: always
+
+  minio:
+    container_name: minio
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ACCESS_KEY: 88e08029606fe5189bc49c83eae523b9
+      MINIO_SECRET_KEY: 091076c8bb54e10594050d88d09720501453427ac67329114f77c00bf4934281
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_DEFAULT_BUCKETS: astrohub_media
+    command: server --console-address ":9001" /data
+    restart: always
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
+  db_data:

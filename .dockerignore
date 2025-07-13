@@ -1,0 +1,7 @@
+node_modules
+.gitignore
+.git
+prisma/migrations
+
+not.txt
+yapılacaklar.txt
