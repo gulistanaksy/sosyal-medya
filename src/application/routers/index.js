@@ -16,7 +16,7 @@ import profileRouter from "./profileRouter.js";
 import postRouter from "./postRouter.js";
 import commentRouter from "./commentRouter.js";
 import likeRouter from "./likeRouter.js";
-// import followRequestRouter from "./followRequestRouter.js";
+import followRequestRouter from "./followRequestRouter.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -65,6 +65,6 @@ router.use("/profile", profileRouter);
 router.use("/post", postRouter);
 router.use("/comment", commentRouter);
 router.use("/like", likeRouter);
-// router.use("/followRequest", followRequestRouter);
+router.use("/followRequest", followRequestRouter);
 
 export default router;
