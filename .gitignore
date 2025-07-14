@@ -6,3 +6,4 @@ prisma/migrations
 dist/
 *.log
 /src/generated/prisma
+not.txt

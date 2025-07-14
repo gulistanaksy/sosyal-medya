@@ -1,28 +1,34 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const getProfile = async (req, res) => {
+const getProfileById = async (req, res) => {
   try {
-    const userId = req.userId; // Middleware'den geliyor
+    const profileId = Number(req.params.id);
+
+    if (isNaN(profileId) || profileId <= 0) {
+      return res.status(400).json({ error: "Geçersiz profil ID." });
+    }
 
     const profile = await prisma.profile.findUnique({
       where: {
-        userId: Number(userId),
+        id: profileId,
       },
       select: {
         id: true,
         bio: true,
         profilePicture: true,
         isPrivate: true,
+        userId: true,
         user: {
           select: {
+            id: true,
             username: true,
             fullName: true,
+            email: true,
           },
         },
         posts: {
-          orderBy: { createdAt: "desc" },
-          take: 5, // Son 5 post
+          take:5,
           select: {
             id: true,
             content: true,
@@ -38,6 +44,9 @@ const getProfile = async (req, res) => {
               },
             },
           },
+          orderBy: {
+            createdAt: "desc",
+          },
         },
       },
     });
@@ -46,11 +55,16 @@ const getProfile = async (req, res) => {
       return res.status(404).json({ message: "Profil bulunamadı." });
     }
 
+    // Eğer profil gizliyse ve sorgulayan kişi sahibi değilse erişimi engelle
+    if (profile.isPrivate && req.userId !== profile.userId) {
+      return res.status(403).json({ error: "Bu profil gizlidir." });
+    }
+
     res.status(200).json(profile);
   } catch (error) {
-    console.error("getProfile error:", error);
+    console.error("getProfileById error:", error);
     res.status(500).json({ error: "Bir hata gerçekleşti." });
   }
 };
 
-export default getProfile;
+export default getProfileById;

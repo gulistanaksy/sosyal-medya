@@ -8,5 +8,7 @@ const profileController = new ProfileController();
 router.get("/", profileController.getProfile);
 router.put("/update", profileController.updateProfile);
 router.post("/upload-picture", profileController.uploadProfilePicture); 
+router.get("/:id", profileController.getProfileById);
+
 
 export default router;
