@@ -55,14 +55,25 @@ model Profile {
 model Post {
   id        Int      @id @default(autoincrement())
   content   String
-  imageUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   profileId Int
   profile   Profile  @relation(fields: [profileId], references: [id])
   comments  Comment[]
   likes     Like[]
+  images    PostImage[]  // 👈 yeni relation
 }
+
+model PostImage {
+  id       Int    @id @default(autoincrement())
+  url      String
+  order    Int    // 👈 sıralama için ekledik
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   Int
+
+  @@unique([postId, order]) // Aynı post içinde aynı sırada birden fazla görsel olmasın
+}
+
 
 model Comment {
   id        Int      @id @default(autoincrement())

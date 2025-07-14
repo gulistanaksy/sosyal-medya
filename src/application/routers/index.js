@@ -13,7 +13,7 @@ import decryptToken from "../../../core/utils/token.js";
 // Alt router'lar
 import userRouter from "./userRouter.js";
 import profileRouter from "./profileRouter.js";
-// import postRouter from "./postRouter.js";
+import postRouter from "./postRouter.js";
 // import commentRouter from "./commentRouter.js";
 // import likeRouter from "./likeRouter.js";
 // import followRequestRouter from "./followRequestRouter.js";
@@ -62,7 +62,7 @@ router.get("/", (req, res) => {
 // ✅ Protected routes
 router.use("/user", userRouter);
 router.use("/profile", profileRouter);
-// router.use("/post", postRouter);
+router.use("/post", postRouter);
 // router.use("/comment", commentRouter);
 // router.use("/like", likeRouter);
 // router.use("/followRequest", followRequestRouter);

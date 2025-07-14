@@ -36,7 +36,7 @@ const uploadProfilePicture = (req, res) => {
         const oldFileName = urlParts[urlParts.length - 1];
 
         try {
-          await minioClient.removeObject("astrohub-media", oldFileName);
+          await minioClient.removeObject("social-media", oldFileName);
           console.log(`Eski profil fotoğrafı silindi: ${oldFileName}`);
         } catch (removeErr) {
           console.warn("Eski dosya silinirken hata:", removeErr);
@@ -53,7 +53,7 @@ const uploadProfilePicture = (req, res) => {
 
       // Yeni dosyayı MinIO’ya yükle
       await minioClient.putObject(
-        "astrohub-media",
+        "social-media",
         fileName,
         bufferStream,
         file.size,
@@ -62,7 +62,7 @@ const uploadProfilePicture = (req, res) => {
         }
       );
 
-      const imageUrl = `http://localhost:9000/astrohub-media/${fileName}`;
+      const imageUrl = `http://localhost:9000/profile-media/${fileName}`;
 
       // Profil kaydını güncelle
       await prisma.profile.update({

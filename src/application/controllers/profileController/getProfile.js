@@ -14,16 +14,30 @@ const getProfile = async (req, res) => {
         bio: true,
         profilePicture: true,
         isPrivate: true,
-        userId: true,
         user: {
           select: {
-            id: true,
             username: true,
             fullName: true,
-            email: true,
           },
         },
-        posts: true,
+        posts: {
+          orderBy: { createdAt: "desc" },
+          take: 5, // Son 5 post
+          select: {
+            id: true,
+            content: true,
+            createdAt: true,
+            images: {
+              select: {
+                url: true,
+                order: true,
+              },
+              orderBy: {
+                order: "asc",
+              },
+            },
+          },
+        },
       },
     });
 
