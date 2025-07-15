@@ -27,15 +27,15 @@ Sosyal medya uygulamaları için geliştirilen bu backend, temel işlevleri sağ
 - 🔄 **Genişletilebilirlik:** SOLID prensiplerine uygun kod yapısı sayesinde kolayca yeni özellik eklenebilir.  
 
 
-# 🚀 Sosyal Medya Backend API Kurulum Talimatları
+## 🚀 Sosyal Medya Backend API Kurulum Talimatları
 
-1. Projeyi klonlayın ve proje dizinine gidin:
+### 1. Projeyi klonlayın ve proje dizinine gidin:
 ```sh
     git clone https://github.com/gulistanaksy/sosyal-medya.git
     cd sosyal-medya
 ```
 
-2. Ana dizinde ".env" dosyası oluşturun ve içine    aşağıdaki satırları ekleyin:
+### 2. Ana dizinde ".env" dosyası oluşturun ve içine    aşağıdaki satırları ekleyin:
 - (DATABASE_URL içindeki "şifreniz" kısmını kendi PostgreSQL şifrenizle değiştirin)
 ```sh
     DATABASE_URL="postgresql://postgres:şifreniz@postgres/projeDB?schema=public&connection_limit=5&pool_timeout=2"
@@ -43,20 +43,19 @@ Sosyal medya uygulamaları için geliştirilen bu backend, temel işlevleri sağ
 ```
 
 
-3. Docker konteynerlerini başlatmak için aşağıdaki komutu çalıştırın:
+### 3. Docker konteynerlerini başlatmak için aşağıdaki komutu çalıştırın:
 ```sh
 docker compose -p projebackend up -d
 ```
 - Bu komut aynı zamanda start.bat dosyasında da bulunmaktadır.
 - İsterseniz start.bat dosyasını çalıştırarak da başlatabilirsiniz.
 
-4. MinIO üzerinde social-media ve post-media adında iki ayrı bucket elle oluşturulmalıdır.
-
-# API Endpointleri
+### 4. MinIO üzerinde social-media ve post-media adında iki ayrı bucket elle oluşturulmalıdır.
 
 
+## API Endpointleri
 
-## 🔐 Auth (Kimlik Doğrulama)
+### 🔐 Auth (Kimlik Doğrulama)
 
 - **POST** `/register`  
   _Yeni kullanıcı kaydı oluşturur._
@@ -66,14 +65,14 @@ docker compose -p projebackend up -d
 
 ---
 
-## 👤 User
+### 👤 User
 
 - **GET** `/user`  
   _Giriş yapan kullanıcı bilgilerini döner._
 
 ---
 
-## 👥 Profile
+### 👥 Profile
 
 - **GET** `/profile`  
   _Giriş yapan kullanıcının profilini getirir._
@@ -95,7 +94,7 @@ docker compose -p projebackend up -d
 
 ---
 
-## 📝 Post
+### 📝 Post
 
 - **POST** `/post/add`  
   _Yeni gönderi oluşturur._
@@ -108,7 +107,7 @@ docker compose -p projebackend up -d
 
 ---
 
-## 💬 Comment
+### 💬 Comment
 
 - **POST** `/comment/add`  
   _Gönderiye yeni yorum ekler._
@@ -124,14 +123,14 @@ docker compose -p projebackend up -d
 
 ---
 
-## ❤️ Like
+### ❤️ Like
 
 - **POST** `/like/toggle/:postId`  
   _Gönderi için beğeniyi ekler/kaldırır._
 
 ---
 
-## 🤝 FollowRequest
+### 🤝 FollowRequest
 
 - **POST** `/followRequest/add`  
   _Takip isteği gönderir._
