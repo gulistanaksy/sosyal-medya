@@ -10,6 +10,7 @@ router.put("/update", profileController.updateProfile);
 router.post("/upload-picture", profileController.uploadProfilePicture); 
 router.get("/:id", profileController.getProfileById);
 router.get("/:id/followers", profileController.getFollowers); // takip edenleri getir
+router.get("/:id/following", profileController.getFollowing); // takip edilenler
 
 
 export default router;
