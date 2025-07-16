@@ -148,3 +148,15 @@ docker compose -p projebackend up -d
   _Takibi bırakır._
 
 ---
+
+## 🚀 Geliştirme Planları
+
+- Bildirim sistemi
+
+- Gerçek zamanlı mesajlaşma (WebSocket)
+
+- Takip isteklerine e-posta - bildirimleri
+
+- Swagger/OpenAPI dokümanları
+
+- Frontend entegrasyonu (React/React Native)
